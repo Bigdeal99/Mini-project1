@@ -1,0 +1,9 @@
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-25T17:29:07.188Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-25T17:36:31.884Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-25T17:37:37.042Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-25T17:39:18.308Z"}
+{"level":"info","message":"User connected: abda0295 (hFANdUGVB-vmGfB8AAAD)","timestamp":"2025-03-25T17:39:24.559Z"}
+{"level":"info","message":"User connected: bigdeal99 (8iLbviHjD2FYeXoxAAAH)","timestamp":"2025-03-25T17:39:39.755Z"}
+{"level":"info","message":"Message routed: abda0295 -> bigdeal99","timestamp":"2025-03-25T17:39:42.747Z"}
+{"level":"info","message":"Message routed: bigdeal99 -> abda0295","timestamp":"2025-03-25T17:39:58.838Z"}
+{"level":"info","message":"User disconnected: bigdeal99","timestamp":"2025-03-25T17:47:44.727Z"}
