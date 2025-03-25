@@ -1,105 +1,109 @@
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
-import logger from './logger.js';
+import logger from './utils/logger.js';
+import { validateMessage } from './utils/validators.js';
+import rateLimit from 'express-rate-limit';
+import path from 'path';
 
-class ChatServer {
-    constructor() {
-        this.app = express();
-        this.server = http.createServer(this.app);
-        this.io = new Server(this.server, {
-            cors: {
-                origin: "http://localhost:3000",
-                methods: ["GET", "POST"]
-            }
-        });
-        this.users = new Map();
+export default class ChatServer {
+  constructor() {
+    this.app = express();
+    this.server = http.createServer(this.app);
+    this.io = new Server(this.server, {
+      cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+      }
+    });
+    this.users = new Map();
 
-        this.initializeMiddlewares();
-        this.initializeRoutes();
-        this.initializeSocket();
+    this.configureMiddleware();
+    this.configureRoutes();
+    this.configureSocket();
+  }
+
+  configureMiddleware() {
+    const clientPath = path.resolve('d:/EASV/Mini-project1/client/public');
+    this.app.use(express.static(clientPath));
+    this.app.use(rateLimit({
+      windowMs: 15 * 60 * 1000,
+      max: 100
+    }));
+  }
+
+  configureRoutes() {
+    this.app.get('/health', (req, res) => {
+      res.status(200).json({
+        status: 'ok',
+        users: this.users.size
+      });
+    });
+
+    // Fallback route to serve index.html for all other routes
+    this.app.get('*', (req, res) => {
+      res.sendFile(path.resolve('d:/EASV/Mini-project1/client/index.html'));
+    });
+  }
+
+  configureSocket() {
+    this.io.use(this.authenticateConnection.bind(this));
+    this.io.on('connection', this.handleConnection.bind(this));
+  }
+
+  authenticateConnection(socket, next) {
+    const { username, publicKey } = socket.handshake.auth;
+    if (!username || !publicKey || this.users.has(username)) {
+      logger.error(`Connection rejected: ${username}`);
+      return next(new Error('Authentication failed'));
     }
+    next();
+  }
 
-    initializeMiddlewares() {
-        this.app.use(express.static('../client'));
-        this.app.use(express.json());
+  handleConnection(socket) {
+    const { username, publicKey } = socket.handshake.auth;
+
+    this.users.set(username, {
+      socketId: socket.id,
+      publicKey,
+      connectedAt: new Date()
+    });
+
+    logger.info(`User connected: ${username}`);
+
+    socket.on('message', (message) => {
+      try {
+        validateMessage(message);
+        this.routeMessage(message);
+      } catch (error) {
+        logger.error(`Invalid message: ${error.message}`);
+      }
+    });
+
+    socket.on('disconnect', () => {
+      this.users.delete(username);
+      logger.info(`User disconnected: ${username}`);
+    });
+  }
+
+  routeMessage(message) {
+    const recipient = this.users.get(message.recipient);
+    if (!recipient) {
+      logger.warn(`Recipient not found: ${message.recipient}`);
+      return;
     }
+    
+    this.io.to(recipient.socketId).emit('message', {
+      ...message,
+      timestamp: new Date().toISOString()
+    });
+    
+    logger.info(`Message routed: ${message.sender} -> ${message.recipient}`);
+  }
 
-    initializeRoutes() {
-        this.app.get('/health', (req, res) => {
-            res.status(200).json({ status: 'ok', users: this.users.size });
-        });
-    }
-
-    initializeSocket() {
-        this.io.use(this.authenticateConnection.bind(this));
-        this.io.on('connection', this.handleConnection.bind(this));
-    }
-
-    authenticateConnection(socket, next) {
-        const username = socket.handshake.auth.username;
-        if (!username || this.users.has(username)) {
-            return next(new Error('Invalid or duplicate username'));
-        }
-        next();
-    }
-
-    handleConnection(socket) {
-        const username = socket.handshake.auth.username;
-        const publicKey = socket.handshake.auth.publicKey;
-
-        this.users.set(username, {
-            socketId: socket.id,
-            publicKey,
-            connectedAt: new Date()
-        });
-
-        logger.info(`User connected: ${username} (${socket.id})`);
-
-        socket.on('disconnect', () => {
-            this.handleDisconnect(username);
-        });
-
-        socket.on('message', (encryptedMessage) => {
-            this.handleIncomingMessage(encryptedMessage);
-        });
-    }
-
-    handleDisconnect(username) {
-        this.users.delete(username);
-        logger.info(`User disconnected: ${username}`);
-    }
-
-    handleIncomingMessage(encryptedMessage) {
-        try {
-            this.validateMessage(encryptedMessage);
-            const recipient = this.users.get(encryptedMessage.recipient);
-            
-            if (recipient) {
-                this.io.to(recipient.socketId).emit('message', {
-                    ...encryptedMessage,
-                    timestamp: new Date().toISOString()
-                });
-                logger.info(`Message routed: ${encryptedMessage.sender} -> ${encryptedMessage.recipient}`);
-            } else {
-                logger.warn(`Recipient not found: ${encryptedMessage.recipient}`);
-            }
-        } catch (error) {
-            logger.error(`Message handling error: ${error.message}`);
-        }
-    }
-
-    validateMessage(message) {
-        if (!message.sender || !message.recipient || !message.data) {
-            throw new Error('Invalid message format');
-        }
-    }
-
-    start(port = process.env.PORT || 3000) {
-        this.server.listen(port, () => {
-            logger.info(`Server running on port ${port}`);
-        });
-    }
+  start(port = 3000) {
+    this.server.listen(port, () => {
+      logger.info(`Server running on port ${port}`);
+    });
+  }
 }
-
-export default ChatServer;
