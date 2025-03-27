@@ -1,0 +1,81 @@
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-26T12:33:25.607Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-26T12:47:46.324Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-26T12:57:53.420Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-26T13:03:43.085Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-26T13:04:32.998Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-26T13:07:32.974Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-26T13:12:30.717Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-26T13:33:28.152Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-26T14:06:58.876Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-26T14:07:35.696Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-26T14:07:42.349Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-26T14:10:07.716Z"}
+[2025-03-26T14:13:59.223Z] INFO: Middleware configured
+[2025-03-26T14:13:59.226Z] INFO: Routes configured
+[2025-03-26T14:13:59.227Z] INFO: Socket configured
+[2025-03-26T14:13:59.229Z] INFO: Chat server started successfully
+[2025-03-26T14:13:59.230Z] INFO: Server running on port 3000
+[2025-03-26T14:17:15.196Z] INFO: Middleware configured
+[2025-03-26T14:17:15.200Z] INFO: Routes configured
+[2025-03-26T14:17:15.200Z] INFO: Socket configured
+[2025-03-26T14:17:15.203Z] INFO: Chat server started successfully
+[2025-03-26T14:17:15.206Z] INFO: Server running on port 3000
+[2025-03-26T14:20:10.877Z] INFO: Middleware configured
+[2025-03-26T14:20:10.880Z] INFO: Routes configured
+[2025-03-26T14:20:10.881Z] INFO: Socket configured
+[2025-03-26T14:20:10.884Z] INFO: Chat server started successfully
+[2025-03-26T14:20:10.885Z] INFO: Server running on port 3000
+[2025-03-26T14:23:22.624Z] INFO: Middleware configured
+[2025-03-26T14:23:22.627Z] INFO: Routes configured
+[2025-03-26T14:23:22.628Z] INFO: Socket configured
+[2025-03-26T14:23:22.631Z] INFO: Chat server started successfully
+[2025-03-26T14:23:22.632Z] INFO: Server running on port 3000
+[2025-03-26T14:28:09.146Z] INFO: Middleware configured
+[2025-03-26T14:28:09.151Z] INFO: Routes configured
+[2025-03-26T14:28:09.152Z] INFO: Socket configured
+[2025-03-26T14:28:09.157Z] INFO: Chat server started successfully
+[2025-03-26T14:28:09.159Z] INFO: Server running on port 3000
+[2025-03-26T14:31:59.678Z] INFO: Middleware configured
+[2025-03-26T14:31:59.682Z] INFO: Routes configured
+[2025-03-26T14:31:59.683Z] INFO: Socket configured
+[2025-03-26T14:31:59.687Z] INFO: Chat server started successfully
+[2025-03-26T14:31:59.689Z] INFO: Server running on port 3000
+[2025-03-26T14:38:09.795Z] INFO: Middleware configured
+[2025-03-26T14:38:09.799Z] INFO: Routes configured
+[2025-03-26T14:38:09.799Z] INFO: Socket configured
+[2025-03-26T14:38:09.803Z] INFO: Chat server started successfully
+[2025-03-26T14:38:09.804Z] INFO: Server running on port 3000
+[2025-03-26T14:38:35.234Z] INFO: Middleware configured
+[2025-03-26T14:38:35.237Z] INFO: Routes configured
+[2025-03-26T14:38:35.238Z] INFO: Socket configured
+[2025-03-26T14:38:35.242Z] INFO: Chat server started successfully
+[2025-03-26T14:38:35.243Z] INFO: Server running on port 3000
+[2025-03-26T14:42:39.345Z] INFO: Middleware configured
+[2025-03-26T14:42:39.349Z] INFO: Routes configured
+[2025-03-26T14:42:39.350Z] INFO: Socket configured
+[2025-03-26T14:42:39.353Z] INFO: Chat server started successfully
+[2025-03-26T14:42:39.354Z] INFO: Server running on port 3000
+[2025-03-26T14:48:53.898Z] INFO: Middleware configured
+[2025-03-26T14:48:53.903Z] INFO: Routes configured
+[2025-03-26T14:48:53.903Z] INFO: Socket configured
+[2025-03-26T14:48:53.906Z] INFO: Chat server started successfully
+[2025-03-26T14:48:53.907Z] INFO: Server running on port 3000
+[2025-03-26T14:57:17.749Z] INFO: Socket configured
+[2025-03-26T14:57:17.754Z] INFO: Chat server started successfully
+[2025-03-26T14:57:17.756Z] INFO: Server running on port 3000
+[2025-03-26T14:57:39.173Z] INFO: Socket configured
+[2025-03-26T14:57:39.179Z] INFO: Chat server started successfully
+[2025-03-26T14:57:39.180Z] INFO: Server running on port 3000
+[2025-03-26T14:58:27.251Z] INFO: Socket configured
+[2025-03-26T14:58:27.256Z] INFO: Chat server started successfully
+[2025-03-26T14:58:27.258Z] INFO: Server running on port 3000
+[2025-03-27T13:37:20.500Z] INFO: Socket configured
+[2025-03-27T13:37:20.508Z] INFO: Chat server started successfully
+[2025-03-27T13:37:20.509Z] INFO: Server running on port 3000
+[2025-03-27T13:39:30.869Z] INFO: Socket configured
+[2025-03-27T13:39:30.875Z] INFO: Chat server started successfully
+[2025-03-27T13:39:30.877Z] INFO: Server running on port 3000
+[2025-03-27T13:42:46.850Z] INFO: Middleware configured
+[2025-03-27T13:42:46.853Z] INFO: Socket configured
+[2025-03-27T13:42:46.857Z] INFO: Chat server started successfully
+[2025-03-27T13:42:46.859Z] INFO: Server running on port 3000

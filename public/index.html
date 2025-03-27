@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureChat</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Registration Section -->
+        <div class="sidebar">
+            <div class="auth-box">
+                <input type="text" id="username" placeholder="Choose username">
+                <button id="registerBtn">Register</button>
+                <div id="status" class="status">Not connected</div>
+            </div>
+            <div class="user-list-container">
+                <h3>Online Users</h3>
+                <ul class="user-list" id="userList"></ul>
+            </div>
+        </div>
+        
+        <!-- Chat Section -->
+        <div class="chat-area">
+            <div class="chat-header">
+                <h2 id="chatWith">Select a user to chat</h2>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages"></div>
+            
+            <div class="input-area">
+                <input type="text" id="messageInput" placeholder="Type your message..." disabled>
+                <button id="sendBtn" disabled><i class="fas fa-paper-plane"></i> Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import ChatClient from '/js/chat-client.js';
+        
+        const chatClient = new ChatClient();
+        let currentRecipient = null;
+    
+        // Registration handler
+        document.getElementById('registerBtn').addEventListener('click', async () => {
+            console.log('Register button clicked'); // Debugging log
+            const username = document.getElementById('username').value.trim();
+            if (!username) {
+                alert('Please enter a username');
+                return;
+            }
+            
+            try {
+                await chatClient.register(username);
+            } catch (error) {
+                alert(`Registration failed: ${error.message}`);
+            }
+        });
+    
+        // User selection handler
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.user-item')) {
+                const userItem = e.target.closest('.user-item');
+                currentRecipient = userItem.dataset.user;
+                
+                // Update UI
+                document.querySelectorAll('.user-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                userItem.classList.add('active');
+                document.getElementById('chatWith').textContent = `Chatting with ${currentRecipient}`;
+                
+                // Enable message input
+                document.getElementById('messageInput').disabled = false;
+                document.getElementById('sendBtn').disabled = false;
+            }
+        });
+    
+        // Message handling
+        document.getElementById('sendBtn').addEventListener('click', () => {
+            const message = document.getElementById('messageInput').value.trim();
+            if (message && currentRecipient) {
+                chatClient.sendMessage(currentRecipient);
+                document.getElementById('messageInput').value = '';
+            }
+        });
+    
+        // User list updates
+        document.addEventListener('userlist_update', (e) => {
+            const users = e.detail;
+            const list = document.getElementById('userList');
+            
+            list.innerHTML = users && users.length > 0 
+                ? users.filter(u => u !== chatClient.username)
+                       .map(u => `<li class="user-item" data-user="${u}">${u}</li>`).join('')
+                : '<li class="no-users">No other users online</li>';
+        });
+    </script>
+</body>
+</html>
