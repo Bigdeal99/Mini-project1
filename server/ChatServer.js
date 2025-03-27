@@ -37,21 +37,21 @@ class ChatServer {
     }
 
     authenticateConnection(socket, next) {
-        const username = socket.handshake.auth.username;
+        const username = socket.handshake.auth.username?.toLowerCase(); // Normalize to lowercase
         if (!username || this.users.has(username)) {
             return next(new Error('Invalid or duplicate username'));
         }
+        socket.handshake.auth.username = username; // Store normalized username
         next();
     }
 
     handleConnection(socket) {
-        const username = socket.handshake.auth.username;
+        const username = socket.handshake.auth.username.toLowerCase(); // Normalize to lowercase
         const publicKey = socket.handshake.auth.publicKey;
 
         this.users.set(username, {
             socketId: socket.id,
             publicKey,
-            connectedAt: new Date()
         });
 
         logger.info(`User connected: ${username} (${socket.id})`);
@@ -61,10 +61,13 @@ class ChatServer {
         });
 
         socket.on('message', (encryptedMessage) => {
+            encryptedMessage.sender = encryptedMessage.sender.toLowerCase(); // Normalize sender username
+            encryptedMessage.recipient = encryptedMessage.recipient.toLowerCase(); // Normalize recipient username
             this.handleIncomingMessage(encryptedMessage);
         });
 
         socket.on('getPublicKey', (recipient, callback) => {
+            recipient = recipient.toLowerCase(); // Normalize recipient username
             const user = this.users.get(recipient);
             if (user) {
                 callback(user.publicKey);
@@ -81,19 +84,29 @@ class ChatServer {
 
     handleIncomingMessage(encryptedMessage) {
         try {
+            console.log('Incoming message:', encryptedMessage); // Debug log
+            console.log('Current users:', Array.from(this.users.keys())); // Log all registered users
             this.validateMessage(encryptedMessage);
+
+            const sender = this.users.get(encryptedMessage.sender);
+            if (!sender) {
+                throw new Error(`Sender not found: ${encryptedMessage.sender}`);
+            }
+
             const recipient = this.users.get(encryptedMessage.recipient);
-            
             if (recipient) {
+                console.log(`Routing message from ${encryptedMessage.sender} to ${encryptedMessage.recipient}`); // Debug log
                 this.io.to(recipient.socketId).emit('message', {
                     ...encryptedMessage,
                     timestamp: new Date().toISOString()
                 });
                 logger.info(`Message routed: ${encryptedMessage.sender} -> ${encryptedMessage.recipient}`);
             } else {
+                console.warn(`Recipient not found: ${encryptedMessage.recipient}`); // Debug log
                 logger.warn(`Recipient not found: ${encryptedMessage.recipient}`);
             }
         } catch (error) {
+            console.error('Error handling message:', error.message); // Debug log
             logger.error(`Message handling error: ${error.message}`);
         }
     }
