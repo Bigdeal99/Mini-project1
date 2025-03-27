@@ -98,28 +98,40 @@
         const chatClient = {
             register() {
                 const username = document.getElementById('username').value;
-                socket.auth = { username };
+                const keyPair = cryptoHelper.generateKeyPair();
+                localStorage.setItem('privateKey', keyPair.privateKey);
+                socket.auth = { username, publicKey: keyPair.publicKey };
                 socket.connect();
                 document.getElementById('registration-status').innerText = 'Registered as ' + username;
             },
-            sendMessage() {
+            async sendMessage() {
                 const recipient = document.getElementById('recipient').value;
                 const message = document.getElementById('message').value;
-                const encryptedMessage = {
+                const recipientPublicKey = await chatClient.getRecipientPublicKey(recipient);
+                const encryptedMessage = cryptoHelper.encryptMessage(message, recipientPublicKey);
+                socket.emit('message', {
                     sender: socket.auth.username,
                     recipient,
-                    data: message
-                };
-                socket.emit('message', encryptedMessage);
+                    data: encryptedMessage
+                });
                 document.getElementById('message-status').innerText = 'Message sent to ' + recipient;
+            },
+            async getRecipientPublicKey(recipient) {
+                return new Promise((resolve) => {
+                    socket.emit('getPublicKey', recipient, (publicKey) => {
+                        resolve(publicKey);
+                    });
+                });
             }
         };
 
         socket.on('message', (message) => {
+            const privateKey = localStorage.getItem('privateKey');
+            const decryptedMessage = cryptoHelper.decryptMessage(message.data, privateKey);
             const chat = document.getElementById('chat');
             const messageElement = document.createElement('div');
             messageElement.className = 'message';
-            messageElement.innerText = `${message.sender}: ${message.data}`;
+            messageElement.innerText = `${message.sender}: ${decryptedMessage}`;
             chat.appendChild(messageElement);
         });
     </script>

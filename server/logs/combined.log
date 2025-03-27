@@ -7,3 +7,45 @@
 {"level":"info","message":"Message routed: abda0295 -> bigdeal99","timestamp":"2025-03-25T17:39:42.747Z"}
 {"level":"info","message":"Message routed: bigdeal99 -> abda0295","timestamp":"2025-03-25T17:39:58.838Z"}
 {"level":"info","message":"User disconnected: bigdeal99","timestamp":"2025-03-25T17:47:44.727Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-27T13:45:18.598Z"}
+{"level":"info","message":"User connected: abda0295 (EwIaocusnd_cLl4yAAAD)","timestamp":"2025-03-27T13:45:24.841Z"}
+{"level":"info","message":"User connected: aaa (Qe_qbJyYSpsQvtIMAAAH)","timestamp":"2025-03-27T13:45:43.723Z"}
+{"level":"info","message":"Message routed: abda0295 -> aaa","timestamp":"2025-03-27T13:45:47.041Z"}
+{"level":"info","message":"Message routed: aaa -> abda0295","timestamp":"2025-03-27T13:45:58.205Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-27T13:55:45.268Z"}
+{"level":"info","message":"User connected: abda0295 (K3bdZhT_L_qgtbY6AAAC)","timestamp":"2025-03-27T13:55:45.427Z"}
+{"level":"info","message":"User connected: aaa (aYmAUTiUBINem7HZAAAD)","timestamp":"2025-03-27T13:55:45.433Z"}
+{"level":"info","message":"User disconnected: aaa","timestamp":"2025-03-27T13:55:53.199Z"}
+{"level":"info","message":"User connected: marcelo.hani99@gmail.com (RAhcmI_BtMkbBycHAAAH)","timestamp":"2025-03-27T13:55:57.675Z"}
+{"level":"info","message":"User connected: bigdeal99 (Letrlv8yQEHOjf2EAAAL)","timestamp":"2025-03-27T13:56:14.955Z"}
+{"level":"info","message":"Message routed: marcelo.hani99@gmail.com -> bigdeal99","timestamp":"2025-03-27T13:56:16.773Z"}
+{"level":"info","message":"Message routed: marcelo.hani99@gmail.com -> bigdeal99","timestamp":"2025-03-27T13:56:29.180Z"}
+{"level":"info","message":"Message routed: marcelo.hani99@gmail.com -> bigdeal99","timestamp":"2025-03-27T13:56:46.589Z"}
+{"level":"info","message":"User disconnected: bigdeal99","timestamp":"2025-03-27T13:56:49.397Z"}
+{"level":"info","message":"User connected: bigdeal99 (1-SvYeNKCQi1txrPAAAP)","timestamp":"2025-03-27T13:56:51.785Z"}
+{"level":"info","message":"Message routed: marcelo.hani99@gmail.com -> bigdeal99","timestamp":"2025-03-27T13:57:36.839Z"}
+{"level":"info","message":"Message routed: marcelo.hani99@gmail.com -> bigdeal99","timestamp":"2025-03-27T13:57:43.911Z"}
+{"level":"info","message":"User disconnected: bigdeal99","timestamp":"2025-03-27T13:57:49.757Z"}
+{"level":"info","message":"User connected: bigdeal99 (WttqFdY5snyJwZZyAAAT)","timestamp":"2025-03-27T13:57:51.983Z"}
+{"level":"info","message":"Message routed: marcelo.hani99@gmail.com -> bigdeal99","timestamp":"2025-03-27T13:57:53.761Z"}
+{"level":"info","message":"User disconnected: marcelo.hani99@gmail.com","timestamp":"2025-03-27T13:58:25.718Z"}
+{"level":"info","message":"User disconnected: bigdeal99","timestamp":"2025-03-27T13:58:41.334Z"}
+{"level":"info","message":"User connected: bigdeal99 (A4uU8qkzsQVFjES_AAAb)","timestamp":"2025-03-27T13:58:47.954Z"}
+{"level":"info","message":"User disconnected: bigdeal99","timestamp":"2025-03-27T14:00:06.120Z"}
+{"level":"info","message":"User connected: bigdeal99 (226Usc_z0eplFHB0AAAl)","timestamp":"2025-03-27T14:00:09.075Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-27T14:00:17.435Z"}
+{"level":"info","message":"User connected: abda0295 (UX76rkWiqrBLdUFqAAAC)","timestamp":"2025-03-27T14:00:17.492Z"}
+{"level":"info","message":"User connected: bigdeal99 (mVwCFoQ6OUXSnAlQAAAD)","timestamp":"2025-03-27T14:00:17.499Z"}
+{"level":"info","message":"Message routed: bigdeal99 -> abda0295","timestamp":"2025-03-27T14:00:41.678Z"}
+{"level":"info","message":"Message routed: bigdeal99 -> abda0295","timestamp":"2025-03-27T14:00:46.456Z"}
+{"level":"info","message":"Message routed: bigdeal99 -> abda0295","timestamp":"2025-03-27T14:00:52.769Z"}
+{"level":"info","message":"User connected: abda0295@easv365.dk (HO1bll7MCTBYC0ZVAAAJ)","timestamp":"2025-03-27T14:00:59.903Z"}
+{"level":"info","message":"Message routed: abda0295@easv365.dk -> bigdeal99","timestamp":"2025-03-27T14:00:59.910Z"}
+{"level":"info","message":"Message routed: abda0295@easv365.dk -> bigdeal99","timestamp":"2025-03-27T14:00:59.912Z"}
+{"level":"info","message":"Message routed: abda0295@easv365.dk -> bigdeal99","timestamp":"2025-03-27T14:00:59.914Z"}
+{"level":"info","message":"Message routed: abda0295@easv365.dk -> bigdeal99","timestamp":"2025-03-27T14:00:59.915Z"}
+{"level":"info","message":"Message routed: abda0295@easv365.dk -> bigdeal99","timestamp":"2025-03-27T14:00:59.915Z"}
+{"level":"info","message":"Message routed: abda0295@easv365.dk -> bigdeal99","timestamp":"2025-03-27T14:00:59.916Z"}
+{"level":"info","message":"Message routed: abda0295@easv365.dk -> bigdeal99","timestamp":"2025-03-27T14:00:59.916Z"}
+{"level":"info","message":"Message routed: abda0295@easv365.dk -> bigdeal99","timestamp":"2025-03-27T14:00:59.917Z"}
+{"level":"info","message":"Message routed: bigdeal99 -> abda0295@easv365.dk","timestamp":"2025-03-27T14:01:08.694Z"}

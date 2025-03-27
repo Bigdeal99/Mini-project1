@@ -63,6 +63,15 @@ class ChatServer {
         socket.on('message', (encryptedMessage) => {
             this.handleIncomingMessage(encryptedMessage);
         });
+
+        socket.on('getPublicKey', (recipient, callback) => {
+            const user = this.users.get(recipient);
+            if (user) {
+                callback(user.publicKey);
+            } else {
+                callback(null);
+            }
+        });
     }
 
     handleDisconnect(username) {
