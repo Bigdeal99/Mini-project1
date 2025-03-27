@@ -91,3 +91,16 @@
 {"level":"info","message":"User connected: abda0295 (8qEJln2uJH6zgxqhAAAJ)","timestamp":"2025-03-27T15:29:03.581Z"}
 {"level":"info","message":"User connected: bigdeal99 (LMG1pbHLnnZrEpl7AAAL)","timestamp":"2025-03-27T15:29:06.159Z"}
 {"level":"info","message":"Message routed: abda0295 -> bigdeal99","timestamp":"2025-03-27T15:29:10.629Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-27T15:35:24.327Z"}
+{"level":"info","message":"User connected: abda0295 (ZT7qVbS-5QnmUszyAAAC)","timestamp":"2025-03-27T15:35:25.211Z"}
+{"level":"info","message":"User connected: bigdeal99 (b9VoGrz8ADxoqibnAAAD)","timestamp":"2025-03-27T15:35:25.225Z"}
+{"level":"info","message":"User disconnected: abda0295","timestamp":"2025-03-27T15:35:27.771Z"}
+{"level":"info","message":"User disconnected: bigdeal99","timestamp":"2025-03-27T15:36:57.819Z"}
+{"level":"info","message":"User connected: user@2 (o04TaGKc4XtaH0WhAAAJ)","timestamp":"2025-03-27T15:36:58.998Z"}
+{"level":"info","message":"User connected: user@1 (aaQaI5odPgWSQU3DAAAL)","timestamp":"2025-03-27T15:37:06.692Z"}
+{"level":"info","message":"Message routed: user@1 -> user@2","timestamp":"2025-03-27T15:37:06.712Z"}
+{"level":"info","message":"Message routed: user@1 -> user@2","timestamp":"2025-03-27T15:37:06.720Z"}
+{"level":"info","message":"Message routed: user@1 -> user@2","timestamp":"2025-03-27T15:37:11.487Z"}
+{"level":"info","message":"User disconnected: user@2","timestamp":"2025-03-27T15:37:14.732Z"}
+{"level":"info","message":"User connected: user@2 (C_EnwX938ofR2CJNAAAP)","timestamp":"2025-03-27T15:37:17.138Z"}
+{"level":"info","message":"Message routed: user@1 -> user@2","timestamp":"2025-03-27T15:37:22.595Z"}
