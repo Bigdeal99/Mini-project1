@@ -2,8 +2,6 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import logger from './logger.js';
-import path from 'path'; // Use import instead of require
-import { fileURLToPath } from 'url'; // Needed to resolve __dirname in ES modules
 
 class ChatServer {
     constructor() {
@@ -11,8 +9,9 @@ class ChatServer {
         this.server = http.createServer(this.app);
         this.io = new Server(this.server, {
             cors: {
-                origin: "http://localhost:3000",
-                methods: ["GET", "POST"]
+                origin: "*", 
+                methods: ["GET", "POST"],
+                credentials: true
             }
         });
         this.users = new Map();
@@ -23,9 +22,7 @@ class ChatServer {
     }
 
     initializeMiddlewares() {
-        const __filename = fileURLToPath(import.meta.url); // Resolve current file path
-        const __dirname = path.dirname(__filename); // Resolve directory name
-        this.app.use(express.static(path.join(__dirname, '../client'))); // Serve static files from the client directory
+        this.app.use(express.static('../client'));
         this.app.use(express.json());
     }
 
@@ -36,12 +33,6 @@ class ChatServer {
     }
 
     initializeSocket() {
-        this.io = new Server(this.server, {
-            cors: {
-                origin: "http://localhost:3000", // Ensure this matches your client URL
-                methods: ["GET", "POST"]
-            }
-        });
         this.io.use(this.authenticateConnection.bind(this));
         this.io.on('connection', this.handleConnection.bind(this));
     }
@@ -63,7 +54,12 @@ class ChatServer {
             publicKey,
             connectedAt: new Date()
         });
-
+        socket.onAny((event, ...args) => {
+            logger.debug(`Received event: ${event} from ${username}`, {
+                event,
+                args: args[0] // Log only first argument for security
+            });
+        });
         logger.info(`User connected: ${username} (${socket.id})`);
 
         socket.on('disconnect', () => {
@@ -97,19 +93,42 @@ class ChatServer {
         try {
             this.validateMessage(encryptedMessage);
             const recipient = this.users.get(encryptedMessage.recipient);
-    
+            
             if (recipient) {
-                this.io.to(recipient.socketId).emit('private-message', encryptedMessage); // Emit to recipient
+                // Add sender verification
+                const sender = this.users.get(encryptedMessage.sender);
+                if (!sender) {
+                    throw new Error('Sender not authenticated');
+                }
+    
+                // Add message signing
+                const signedMessage = {
+                    ...encryptedMessage,
+                    senderSocket: sender.socketId,
+                    timestamp: new Date().toISOString()
+                };
+    
+                this.io.to(recipient.socketId).emit('private-message', signedMessage);
                 logger.info(`Message routed: ${encryptedMessage.sender} -> ${encryptedMessage.recipient}`);
+                
+                // Send delivery confirmation
+                this.io.to(sender.socketId).emit('message-status', {
+                    status: 'delivered',
+                    timestamp: signedMessage.timestamp
+                });
             } else {
-                this.io.to(this.users.get(encryptedMessage.sender)?.socketId).emit('user-status', 
-                    'Recipient not found or offline');
                 logger.warn(`Recipient not found: ${encryptedMessage.recipient}`);
+                this.io.to(this.users.get(encryptedMessage.sender)?.socketId).emit('message-status', {
+                    status: 'failed',
+                    reason: 'Recipient not found'
+                });
             }
         } catch (error) {
             logger.error(`Message handling error: ${error.message}`);
-            this.io.to(this.users.get(encryptedMessage.sender)?.socketId).emit('error', 
-                'Message delivery failed');
+            this.io.to(this.users.get(encryptedMessage.sender)?.socketId).emit('error', {
+                type: 'message-delivery',
+                message: error.message
+            });
         }
     }
 

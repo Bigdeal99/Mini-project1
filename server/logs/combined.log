@@ -120,3 +120,18 @@
 {"level":"info","message":"User disconnected: a","timestamp":"2025-03-27T14:54:16.316Z"}
 {"level":"info","message":"User connected: a (KKqNpFHJzT7gSjArAAAJ)","timestamp":"2025-03-27T14:54:24.068Z"}
 {"level":"info","message":"User connected: b (zP1kOuZ8u8op2h2_AAAL)","timestamp":"2025-03-27T14:54:31.111Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-27T14:57:03.509Z"}
+{"level":"info","message":"User connected: a (_NHhrKaWXiM-uEEaAAAF)","timestamp":"2025-03-27T14:57:08.512Z"}
+{"level":"info","message":"User connected: b (HOj_7lLta5lO8JYeAAAH)","timestamp":"2025-03-27T14:57:11.274Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-27T15:05:36.025Z"}
+{"level":"info","message":"User connected: a (jNefe2U7Q41VE-MSAAAC)","timestamp":"2025-03-27T15:05:37.174Z"}
+{"level":"info","message":"User connected: b (jwPoL-88nHpnE7bkAAAD)","timestamp":"2025-03-27T15:05:37.180Z"}
+{"level":"info","message":"User disconnected: a","timestamp":"2025-03-27T15:05:54.730Z"}
+{"level":"info","message":"User disconnected: b","timestamp":"2025-03-27T15:05:55.683Z"}
+{"level":"info","message":"User connected: a (GPvfuNLCnnaxL9sPAAAJ)","timestamp":"2025-03-27T15:06:02.568Z"}
+{"level":"info","message":"User connected: b (E9RGSt83MRr9n7zhAAAL)","timestamp":"2025-03-27T15:06:10.783Z"}
+{"level":"info","message":"User disconnected: b","timestamp":"2025-03-27T15:06:28.162Z"}
+{"level":"info","message":"User disconnected: a","timestamp":"2025-03-27T15:07:37.658Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-27T15:07:47.012Z"}
+{"level":"info","message":"User connected: a (d4kd1t7NiLgAahqvAAAB)","timestamp":"2025-03-27T15:07:55.792Z"}
+{"level":"info","message":"User connected: b (2tRuj18qucet1RbuAAAF)","timestamp":"2025-03-27T15:08:04.403Z"}

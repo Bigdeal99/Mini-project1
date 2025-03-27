@@ -8,12 +8,12 @@ const chatClient = {
 
             const keyPair = await cryptoHelper.generateKeyPair();
             localStorage.setItem('privateKey', keyPair.privateKey);
-
+            
             socket.auth = { 
                 username, 
                 publicKey: keyPair.publicKey 
-            }; // Ensure this is set before connecting
-
+            };
+            
             socket.connect();
             document.getElementById('registration-status').innerText = `Registered as ${username}`;
         } catch (error) {
@@ -81,19 +81,45 @@ const chatClient = {
 socket.on('connect_error', (error) => {
     document.getElementById('registration-status').innerText = `Connection error: ${error.message}`;
 });
+socket.onAny((event, ...args) => {
+    console.log('Received event:', event, args);
+});
 
+socket.on('connect', () => {
+    console.log('Connected to server with ID:', socket.id);
+});
+
+socket.on('disconnect', (reason) => {
+    console.log('Disconnected:', reason);
+});
 socket.on('private-message', async (message) => {
     try {
         const privateKey = localStorage.getItem('privateKey');
-        if (!privateKey) throw new Error('No decryption key available');
+        if (!privateKey) {
+            console.error('No private key found');
+            return;
+        }
 
+        // Convert base64 private key to ArrayBuffer
         const decrypted = await cryptoHelper.decryptMessage(message.data, privateKey);
-        chatClient.displayMessage(message.sender, decrypted);
+        
+        // Create message element
+        const chat = document.getElementById('chat');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message';
+        messageDiv.innerHTML = `
+            <strong>${message.sender}:</strong>
+            <span>${decrypted}</span>
+            <div class="time">${new Date(message.timestamp).toLocaleTimeString()}</div>
+        `;
+        
+        chat.appendChild(messageDiv);
+        chat.scrollTop = chat.scrollHeight; // Auto-scroll to bottom
     } catch (error) {
         console.error('Decryption error:', error);
+        // Show error to user
+        const statusDiv = document.getElementById('message-status');
+        statusDiv.textContent = `Error decrypting message: ${error.message}`;
+        statusDiv.style.color = 'red';
     }
-});
-
-socket.on('user-status', (status) => {
-    document.getElementById('message-status').innerText = status;
 });
