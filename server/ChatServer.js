@@ -2,6 +2,8 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import logger from './logger.js';
+import path from 'path'; // Use import instead of require
+import { fileURLToPath } from 'url'; // Needed to resolve __dirname in ES modules
 
 class ChatServer {
     constructor() {
@@ -21,7 +23,9 @@ class ChatServer {
     }
 
     initializeMiddlewares() {
-        this.app.use(express.static('../client'));
+        const __filename = fileURLToPath(import.meta.url); // Resolve current file path
+        const __dirname = path.dirname(__filename); // Resolve directory name
+        this.app.use(express.static(path.join(__dirname, '../client'))); // Serve static files from the client directory
         this.app.use(express.json());
     }
 
@@ -32,6 +36,12 @@ class ChatServer {
     }
 
     initializeSocket() {
+        this.io = new Server(this.server, {
+            cors: {
+                origin: "http://localhost:3000", // Ensure this matches your client URL
+                methods: ["GET", "POST"]
+            }
+        });
         this.io.use(this.authenticateConnection.bind(this));
         this.io.on('connection', this.handleConnection.bind(this));
     }
@@ -64,12 +74,16 @@ class ChatServer {
             this.handleIncomingMessage(encryptedMessage);
         });
 
-        socket.on('getPublicKey', (recipient, callback) => {
-            const user = this.users.get(recipient);
-            if (user) {
-                callback(user.publicKey);
-            } else {
-                callback(null);
+        socket.on('get-public-key', (recipient, callback) => {
+            try {
+                const user = this.users.get(recipient);
+                if (user) {
+                    callback({ publicKey: user.publicKey });
+                } else {
+                    callback({ error: 'User not found' });
+                }
+            } catch (error) {
+                callback({ error: error.message });
             }
         });
     }
@@ -83,18 +97,19 @@ class ChatServer {
         try {
             this.validateMessage(encryptedMessage);
             const recipient = this.users.get(encryptedMessage.recipient);
-            
+    
             if (recipient) {
-                this.io.to(recipient.socketId).emit('message', {
-                    ...encryptedMessage,
-                    timestamp: new Date().toISOString()
-                });
+                this.io.to(recipient.socketId).emit('private-message', encryptedMessage); // Emit to recipient
                 logger.info(`Message routed: ${encryptedMessage.sender} -> ${encryptedMessage.recipient}`);
             } else {
+                this.io.to(this.users.get(encryptedMessage.sender)?.socketId).emit('user-status', 
+                    'Recipient not found or offline');
                 logger.warn(`Recipient not found: ${encryptedMessage.recipient}`);
             }
         } catch (error) {
             logger.error(`Message handling error: ${error.message}`);
+            this.io.to(this.users.get(encryptedMessage.sender)?.socketId).emit('error', 
+                'Message delivery failed');
         }
     }
 
